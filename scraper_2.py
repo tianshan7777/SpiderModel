@@ -1,10 +1,10 @@
 from scrapy.spider import BaseSpider
-from spider_v1.items import HousingItem
+from items import HousingItem
 from scrapy.contrib.loader import XPathItemLoader
 from scrapy.contrib.loader.processor import Join, MapCompose
 from scrapy.selector import Selector
 
-class HousingSpider(BaseSpider):
+class Spider(BaseSpider):
 	#Spider for regularly update www.rightmove.co.uk/overseas-property-for-sale/Budapest.html
 	name = "rightmove"
 	allowed_domains = ["rightmove.co.uk"]

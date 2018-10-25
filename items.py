@@ -9,7 +9,7 @@ class HousingItem(Item):
 	price = Field()
 	#category = Field()
 	#propertyType = Field()
-	addree = Field()
+	address = Field()
 	#itemId = Field() 
 	#size = Field()
 	description = Field()
