@@ -1,10 +1,10 @@
-from scrapy.spider import BaseSpider
-from items import HousingItem
-from scrapy.contrib.loader import XPathItemLoader
-from scrapy.contrib.loader.processor import Join, MapCompose
+from scrapy.spider import Spider
 from scrapy.selector import Selector
+from items import HousingItem
+from scrapy.loader import XPathItemLoader
+from scrapy.loader.processors import Join, MapComposes
 
-class Spider(BaseSpider):
+class Spider(Spider):
 	#Spider for regularly update www.rightmove.co.uk/overseas-property-for-sale/Budapest.html
 	name = "rightmove"
 	allowed_domains = ["rightmove.co.uk"]
@@ -15,19 +15,19 @@ class Spider(BaseSpider):
 	#A dictionary of all of our items we defined in Items.py earlier with the associated values as their XPaths, relative to items_list_xpath
 	item_fields = {
 		'name' : './/h2[@class="propertyCard-title"/text()]',
-		'price' : './/div[@class="propertyCard-priceValue"]/text()',,
+		'price' : './/div[@class="propertyCard-priceValue"]/text()',
 		'address' : './/address/span/text()',
-		'description' : './/span[@itemprop="description"]/text()
+		'description' : './/span[@itemprop="description"]/text()'
 	}
 
 	#The response parameter is what the spider gets vack in return after making a request to the hungarianhouses website
 	#We are parsing that response with our XPaths
 	def parse(self, response):
 		#Initiate HtmlXpathSelector()n by giving it the parameter, response
-		selector = HtmlXpathSelector(response)
+		selector = Selector(response)
 
 		#Iterate over houses
-		for house in selector.select(self.items_list_xpath):
+		for house in selector.xpath(self.items_list_xpath):
 			loader = XPathItemLoader(HousingItem(), selector = house)
 
 			#Define processors
